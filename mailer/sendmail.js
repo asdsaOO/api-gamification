@@ -13,14 +13,14 @@ const transporter = nodeMailer.createTransport({
     }
 
 });
-async function sendemail( email){
+async function sendemail( email, code){
     console.log(email);
-    var num = await Math.floor(Math.random()*(1000-9998+1)+9998);
+    //var num = await Math.floor(Math.random()*(1000-9998+1)+9998);
     const info = await transporter.sendMail({
         from: "poogamification7@gmail.com",
         to: email,
         subject:"PARA ACTIVAR TU CUENTA INICIA SESION E INGRESA EL CODIGO",
-        html:`<b>${num} <b>`,
+        html:`<b>${code} <b>`,
 
     });
 

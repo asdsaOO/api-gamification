@@ -28,6 +28,6 @@ app.get('/',(req,res)=>{
 console.log('hola q hacesssss');
 
 app.listen(PORT, ()=>{
-    console.log('servidor corriendo 2');
+    console.log('servidor corriendo 2.1');
 })
 
