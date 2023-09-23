@@ -17,7 +17,20 @@ accountRouter.post('/signUp', async(req,res)=>{
         status:false,
         privCode:num
     } 
-    userAccount.createAccount(sendAccount).then(solve=>{
+
+    mailer.sendemail(newAccount.email,num).then(sendStatus=>{
+        userAccount.createAccount(sendAccount).then(()=>{
+            
+            res.send(JSON.parse(`{"error":${res.statusCode},"description":"ok"}`));
+
+
+        }).catch(e=>{
+            res.statusCode=400;
+            res.send(JSON.parse(`{"error":${res.statusCode},"description":${error}}`));
+
+        })
+    })
+    /*userAccount.createAccount(sendAccount).then(solve=>{
         //se creo en firebase
         mailer.sendemail(newAccount.email,num).then(()=>{
 
@@ -36,7 +49,7 @@ accountRouter.post('/signUp', async(req,res)=>{
         })
 
         //res.send("resuelto");
-    });
+    });*/
 
 
 

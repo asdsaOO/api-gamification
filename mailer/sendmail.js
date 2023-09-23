@@ -20,7 +20,23 @@ async function sendemail( email, code){
         from: "poogamification7@gmail.com",
         to: email,
         subject:"PARA ACTIVAR TU CUENTA INICIA SESION E INGRESA EL CODIGO",
-        html:`<b>${code} <b>`,
+        html:`
+        <body>
+        <a hidden href="https://es.cooltext.com"><img src="https://images.cooltext.com/5672986.png" width="728" height="103" alt="POO WARS" /></a>
+        <br/><a href="https://es.cooltext.com" hidden>Cool Text: Logo and Button Generator</a>
+        <br/>
+        <center>
+        <P>
+        <b>
+            INGESA EL CODIGO PARA ACTIVAR CUENTA
+        </b>
+        </P>
+        <p1>
+        CODIGO:${code}
+        </p1>
+        </center>
+        </body>
+        `,
 
     });
 
