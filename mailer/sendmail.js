@@ -15,6 +15,7 @@ const transporter = nodeMailer.createTransport({
 });
 async function sendemail( email, code){
     console.log(email);
+    try{
     //var num = await Math.floor(Math.random()*(1000-9998+1)+9998);
     const info = await transporter.sendMail({
         from: "poogamification7@gmail.com",
@@ -39,12 +40,16 @@ async function sendemail( email, code){
         `,
 
     });
+    }catch(e){
+        console.log(`error email ${e}`);
+        throw new Error (`{"error":"${res.statusCode}","description":"${e}}"`);
+    }
 
     
 
    
 
-    return info.messageId;
+    //return info.messageId;
 
      
 }
