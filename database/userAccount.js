@@ -30,7 +30,7 @@ async function createAccount( userObject){
 
     });
 }
-  function signInUser(userObject){
+  function signInUser(userObject){ //devuelve el usuario como objeto
     console.log(userObject);
     const id = (userObject.email).substring(0,userObject.email.length-4);
     console.log(`${process.env.DB_URL}/Users/${id}.json`);
@@ -78,9 +78,65 @@ function updateUser (userObject){
 
 }
 
+function createEmptyProgress(userObject){
+    const id = (userObject.email).substring(0,userObject.email.length-4);
+    console.log(`id de guardado: ${id}`);
+
+    return new Promise ((resolve,reject)=>{
+        axios ({
+            method:'put',
+            url:`${process.env.DB_URL}/progressSaves/${id}.json`,
+            data:{
+                lvl:1,
+                score:0,
+                win1:0,
+                win2:0,
+                win3:0,
+                win4:0,
+                win5:0,
+                win6:0,
+                win7:0,
+                win8:0,
+                defeat:0,
+                botScore:0
+            }
+        }).then(()=>{
+            resolve ("se creo datos de guardado correctamente");
+        }).catch((e)=>{
+            reject (e);
+
+        })
+    })
+
+
+}
+function getProgress(email){
+    const id = (email).substring(0,email.length-4);
+    console.log(`id de guardado: ${id}`);
+    return new Promise ((resolve,reject)=>{
+
+        axios({
+            method:'get',
+            url: `${process.env.DB_URL}/progressSaves/${id}.json`
+        }).then((res)=>{
+            console.log(res.data);
+            resolve(res.data);
+
+
+        }).catch(err=>{
+            reject(err);
+        })
+    })
+
+
+
+}
+
 module.exports={
 
     createAccount:createAccount,
     signInUser:signInUser,
-    updateUser:updateUser
+    updateUser:updateUser,
+    createEmptyProgress:createEmptyProgress,
+    getProgress:getProgress
 }

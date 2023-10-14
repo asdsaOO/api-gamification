@@ -10,8 +10,10 @@ const accountRouter= express.Router();
 accountRouter.use(express.text());// body sra en json middleware
 
 accountRouter.post('/signUp', async(req,res)=>{
+    //obtienes el body enviadp y  lo conviertes en un json
     let newAccount = await JSON.parse (req.body);
     var num =   await Math.floor(Math.random()*(1000-9998+1)+9998);
+    //mapeas datos del ususario creando un objecto 
     var sendAccount= await {
         email:newAccount.email,
         userName:newAccount.userName,
@@ -19,9 +21,18 @@ accountRouter.post('/signUp', async(req,res)=>{
         status:false,
         privCode:num
     } 
+    //haces el llamado a las promesas para realizar el registro del nuevo usuario 
     mailer.sendemail(sendAccount.email,sendAccount.privCode).then(()=>{
         userAccount.createAccount(sendAccount).then(()=>{
-            res.send(JSON.parse(`{"error":${res.statusCode},"description":"ok"}`))
+            //crear cuenta de inicio
+
+            userAccount.createEmptyProgress(newAccount).then(()=>{
+                res.send(JSON.parse(`{"error":${res.statusCode},"description":"ok"}`));
+
+            }).catch(()=>{
+                console.log("error al crear "+e);
+            });
+            
 
         })
     }).catch(e=>{
@@ -90,6 +101,25 @@ accountRouter.post('/activeAccount',(req,res)=>{
 
 
 });
+accountRouter.post('/getProgress',(req,res)=>{
+    
+    var dataObjct=JSON.parse( req.body);
+    console.log(dataObjct);
+    
+    
+    userAccount.getProgress(dataObjct.email).then(dataDB=>{
+        //console.log(dataDB+"datooo");
+        res.send(dataDB);
+    }).catch(e=>{
+        res.statusCode=400;
+        console.log(e);
+        res.send("ERROR");
+    })
+
+})
+
+
+
 
 accountRouter.get('/',(req,res)=>{
 
