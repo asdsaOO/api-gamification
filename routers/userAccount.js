@@ -127,6 +127,20 @@ accountRouter.get('/',(req,res)=>{
     res.send('hola signup');
 });
 
+accountRouter.post('/updateProgress',(req,res)=>{
+
+    var dataObjct = JSON.parse(req.body);
+    //console.log(dataObjct);
+    userAccount.updateProgress(dataObjct).then(resolve=>{
+        res.send(resolve)
+    }).catch(e=>{
+        res.statusCode=400;
+        console.log(e);
+        res.send("ERROR");
+    })
+    
+})
+
  function createNewUser(newAccount){
     return new Promise ((resolve)=>{
         mailer.sendemail(newAccount,newAccount.privCode).then(()=>{

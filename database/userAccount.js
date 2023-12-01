@@ -131,6 +131,26 @@ function getProgress(email){
 
 
 }
+function updateProgress (useObject){
+    console.log(useObject.email);
+    const id = (useObject.email).substring(0,useObject.email.length-4);
+    console.log(`id de guardado: ${id}`);
+    console.log('datos de progreso'+ useObject.progress);
+    return new Promise ((resolve, reject)=>{
+        axios ({
+            method:'put',
+            url: `${process.env.DB_URL}/progressSaves/${id}.json`,
+            data: useObject.progress,
+
+        }).then((res)=>{
+            console.log('actualizado');
+            resolve ('actualizado');
+        }).catch (err=>{
+            reject(err);
+        })
+    })
+
+}
 
 module.exports={
 
@@ -138,5 +158,6 @@ module.exports={
     signInUser:signInUser,
     updateUser:updateUser,
     createEmptyProgress:createEmptyProgress,
-    getProgress:getProgress
+    getProgress:getProgress,
+    updateProgress:updateProgress
 }
